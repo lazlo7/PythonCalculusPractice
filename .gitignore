@@ -2,5 +2,5 @@
 .venv
 # Ignore .vscode folder
 .vscode
-# Ignore anything inside out
-out/
+# Ignore out folder
+out
