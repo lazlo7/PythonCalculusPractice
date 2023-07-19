@@ -27,22 +27,25 @@ class DocumentGenerator():
         self.variant_enumerator: Callable[[int], str] = lambda variant_n: f"Вариант ${variant_n}$"
 
     """
-    Sets 'header' part of the document (i. e. where '\usepackage' is defined)
+    Sets 'header' part of the document (i. e. where '\\usepackage' is defined)
     """
     def set_header(self, header: str):
         self.header = header
+        return self
 
     """
     Sets the title of the document.
     """
     def set_title(self, title: str):
         self.title = title
+        return self
 
     """
     Sets the description of the document.
     """
     def set_description(self, description: str):
         self.description = description
+        return self
 
     """
     Sets the variant generator function.
@@ -50,15 +53,18 @@ class DocumentGenerator():
     """
     def set_variant_generator(self, variant_generator: Callable[[int, bool], str]):
         self.variant_generator = variant_generator
+        return self
 
     """
     Sets the border of the document, which divides variants from each other.
     """
     def set_border(self, border: str):
         self.border = border
+        return self
 
     def set_variant_enumerator(self, variant_enumerator: Callable[[int], str]):
         self.variant_enumerator = variant_enumerator
+        return self
 
     def generate(self, variant_count: int, is_solution: bool) -> Generator[str]:
         def line(text: str = ""):
