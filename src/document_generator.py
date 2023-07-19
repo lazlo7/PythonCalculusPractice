@@ -23,7 +23,7 @@ class DocumentGenerator():
 """
         self.title: str = "Индивидуальное задание."
         self.description: str = ""
-        self.variant_generator: Callable[[int], str] = lambda _: ""
+        self.variant_generator: Callable[[int, bool], str] = lambda variant_n, is_solution: ""
         self.variant_enumerator: Callable[[int], str] = lambda variant_n: f"Вариант ${variant_n}$"
 
     """
@@ -46,9 +46,9 @@ class DocumentGenerator():
 
     """
     Sets the variant generator function.
-    Variant generator receives a variant number and returns a string.
+    Variant generator receives a variant number, a boolean value, indicating if this is a solution, and returns a string.
     """
-    def set_variant_generator(self, variant_generator: Callable[[int], str]):
+    def set_variant_generator(self, variant_generator: Callable[[int, bool], str]):
         self.variant_generator = variant_generator
 
     """
@@ -60,7 +60,7 @@ class DocumentGenerator():
     def set_variant_enumerator(self, variant_enumerator: Callable[[int], str]):
         self.variant_enumerator = variant_enumerator
 
-    def generate(self, variant_count: int) -> Generator[str]:
+    def generate(self, variant_count: int, is_solution: bool) -> Generator[str]:
         def line(text: str = ""):
             yield text + "\n"
 
@@ -73,7 +73,7 @@ class DocumentGenerator():
         for variant_n in range(variant_count):
             line(self.border)
             line(self.variant_enumerator(variant_n))
-            line(self.variant_generator(variant_n))
+            line(self.variant_generator(variant_n, is_solution))
 
         line()
         line(r"\end{document}")
